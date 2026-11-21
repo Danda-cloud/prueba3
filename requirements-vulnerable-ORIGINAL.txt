@@ -1,0 +1,5 @@
+# Archivo original proporcionado por SecureDev (NO SEGURO).
+# Se conserva como evidencia de auditoría de dependencias.
+# Ver requirements.txt para las versiones parchadas.
+Flask==1.1.2
+requests==2.24.0

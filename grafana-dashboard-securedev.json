@@ -1,0 +1,96 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "9.0.0" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0" },
+    { "type": "panel", "id": "timeseries", "name": "Time series", "version": "" },
+    { "type": "panel", "id": "stat", "name": "Stat", "version": "" }
+  ],
+  "title": "SecureDev - Monitorización flask-app",
+  "description": "Dashboard del Parcial 3 OCY1102: estado del servicio, tasa de peticiones a /hello y peticiones sospechosas (posible intento de XSS).",
+  "editable": true,
+  "schemaVersion": 36,
+  "version": 1,
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Estado del servicio (up)",
+      "type": "stat",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "up{job=\"flask-app\"}",
+          "legendFormat": "flask-app",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "red" }, "1": { "text": "UP", "color": "green" } } }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "green", "value": 1 } ] }
+        },
+        "overrides": []
+      },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value_and_name" }
+    },
+    {
+      "id": 2,
+      "title": "Tasa de peticiones a /hello (req/s)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 0 },
+      "targets": [
+        {
+          "expr": "rate(hello_requests_total[1m])",
+          "legendFormat": "peticiones /hello",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps" }, "overrides": [] }
+    },
+    {
+      "id": 3,
+      "title": "Peticiones sospechosas a /hello (posible intento de XSS)",
+      "type": "timeseries",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "hello_suspicious_requests_total",
+          "legendFormat": "intentos sospechosos (acumulado)",
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }
+        },
+        {
+          "expr": "rate(hello_suspicious_requests_total[1m])",
+          "legendFormat": "tasa de intentos sospechosos",
+          "refId": "B",
+          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": { "drawStyle": "bars" },
+          "color": { "mode": "fixed", "fixedColor": "red" }
+        },
+        "overrides": []
+      }
+    }
+  ]
+}
