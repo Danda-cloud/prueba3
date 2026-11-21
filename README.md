@@ -1,9 +1,7 @@
 # SecureDev — Parcial 3 OCY1102 (DevSecOps / CI-CD)
 
 Este proyecto implementa el pipeline de CI/CD pedido en la Evaluación Parcial 3
-("Explotación y Mitigación de Vulnerabilidades Web"). Todo el código y la
-configuración sale de las guías 3.1 a 3.5 que ya trabajaste (mismo app Flask
-`/hello`, mismo patrón de Jenkinsfile, mismo docker-compose de Prometheus/Grafana).
+
 
 ## Archivos
 
