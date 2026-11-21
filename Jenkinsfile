@@ -64,7 +64,7 @@ pipeline {
             steps {
                 echo '=== SECURITY TEST: escaneo dinámico con OWASP ZAP (baseline scan) ==='
                 sh '''
-                    docker run --rm -v "$(pwd):/zap/wrk/:rw" -t zaproxy/zap-stable zap-baseline.py \
+                    docker run --rm -v "$(pwd):/zap/wrk/:rw" -t zaproxy/zap-stable zap-full-scan.py \
                         -t "http://host.docker.internal:${APP_PORT}/hello?name=ZAPscan" \
                         -r zap-report.html || true
                 '''

@@ -1,7 +1,4 @@
-# ============================================================
-# CÓDIGO ORIGINAL PROPORCIONADO POR SECUREDEV — NO SEGURO
-# Se conserva tal cual (fuente: Guía 3.2.2 / 3.3.2 / 3.5.2, OCY1102)
-# únicamente como evidencia de auditoría. NO se despliega en producción.
+
 #
 # Vulnerabilidad: Cross-Site Scripting (XSS) Reflejado — CWE-79
 # El parámetro 'name' se inserta sin escapar en la respuesta HTML,
