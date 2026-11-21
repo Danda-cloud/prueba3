@@ -56,7 +56,7 @@ pipeline {
                 sh 'docker rm -f ${TEST_CONTAINER} || true'
                 sh 'docker run -d --name ${TEST_CONTAINER} -p ${APP_PORT}:5000 ${IMAGE_NAME}:latest'
                 sh 'sleep 5'
-                sh 'curl -sf "http://localhost:${APP_PORT}/hello?name=Jenkins"'
+                sh 'curl -sf "http://host.docker.internal:${APP_PORT}/hello?name=Jenkins"'
             }
         }
 
